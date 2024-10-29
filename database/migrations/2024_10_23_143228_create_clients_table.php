@@ -15,10 +15,14 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('last_name');
+            $table->string('dni');
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('address');
             $table->string('region');
+            $table->foreignId('user_id')->constrained('clients', 'id')->onDelete('cascade');
+            $table->timestamps();
+        
         });
     }
 
@@ -30,3 +34,10 @@ return new class extends Migration
         Schema::dropIfExists('clients');
     }
 };
+
+
+
+
+
+
+

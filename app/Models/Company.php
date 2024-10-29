@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'status',
+        'logo',
+        'ruc',
+        'user_id',
+    ];
+
+   
+     
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

@@ -10,7 +10,6 @@ class RoleSeeder extends Seeder
 {
     public function run()
     {
-     
         $permissions = [
             'manage products',
             'view reports',
@@ -19,21 +18,22 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+     
+            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
         }
 
-      
-        $superAdmin = Role::create(['name' => 'Super Manager']);
-        $superAdmin->givePermissionTo(Permission::all());
+        
+        $superAdmin = Role::firstOrCreate(['name' => 'Super Manager']);
+        $superAdmin->syncPermissions(Permission::all());
 
-        $admin = Role::create(['name' => 'Manager']);
-        $admin->givePermissionTo(['manage products', 'view reports']);
+        $admin = Role::firstOrCreate(['name' => 'Manager']);
+        $admin->syncPermissions(['manage products', 'view reports']);
 
-        $assistant = Role::create(['name' => 'Asistent']);
-        $assistant->givePermissionTo('view reports');
+        $assistant = Role::firstOrCreate(['name' => 'Asistent']);
+        $assistant->syncPermissions(['view reports']);
 
-        $buyer = Role::create(['name' => 'Purchaser']);
-        $buyer->givePermissionTo('make purchases');
+        $buyer = Role::firstOrCreate(['name' => 'Purchaser']);
+        $buyer->syncPermissions(['make purchases']);
     }
 }
 

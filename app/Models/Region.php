@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Region extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'status',
+    ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+
 }

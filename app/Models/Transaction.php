@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'point_id',
         'product_id',
-        'quantity',
-        'points_used',
-        'date',
+        'amount_used',
     ];
 
-    public function user()
+    public function point()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Point::class);
     }
 
     public function product()

@@ -7,44 +7,49 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    public function index(){
-        
-        return view('client.index');
+    public function index()
+    {
+        $clients = Client::all();
+        return view('client.index', ['clients' => $clients]);
     }
 
-    public function indexcreate(){
-        
+    public function indexcreate()
+    {
         return view('client.create');
     }
 
-    public function indexshow()
+   
+    public function show($id)
     {
-        $courses = Client::all();
-
-        return view('client.show', ['client' => $courses]);
+        $client = Client::findOrFail($id);
+        return view('client.show', ['client' => $client]);
     }
+
     public function indexupdate($id)
     {
-        $course = Client::findOrFail($id);
-        return view('client.update', ['client' => $course]);
+        $client = Client::findOrFail($id);
+        return view('client.update', ['client' => $client]);
     }
 
     public function store(Request $request)
     {
-        //dd($request);
         $request->validate([
-            'description' => 'required|string',
-            'credits' => 'required|text',
-            'id_instructors' => 'required|integer',
+            'name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:clients,email',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'region' => 'required|string',
         ]);
-        $courses = Client::create($request->all());
 
-        return redirect()->route('client.show');
+        $client = Client::create($request->all());
+
+     
+        return redirect()->route('client.show', $client->id);
     }
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        //dd($request->all());
         $request->validate([
             'name' => 'required|string',
             'last_name' => 'required|string',
@@ -54,25 +59,17 @@ class ClientController extends Controller
             'region' => 'required|string',
         ]);
 
-        $students = Client::findOrFail($id);
-        $students->update([
-           'name' => $request->name,
-           'last_name' => $request->last_name,
-           'email' => $request->email,
-           'phone' => $request->phone,
-           'address' => $request->address,
-           'region' => $request->region,
-        ]);
+        $client = Client::findOrFail($id);
+        $client->update($request->all());
 
         return redirect()->route('client.show', $id);
     }
 
     public function delete($id)
     {
-        $courses = Client::findOrFail($id);
-        $courses->delete();
+        $client = Client::findOrFail($id);
+        $client->delete();
 
-        return redirect()->route('client.show');
+        return redirect()->route('client.index');
     }
 }
-
