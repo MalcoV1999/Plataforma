@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Lista Regiones')
+@section('title', 'Lista de Regiones')
 
 @section('content')
     <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">{{ __('Lista Regiones') }}</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ __('Lista de Regiones') }}</h1>
 
         <div class="mb-4">
             <a href="{{ route('region.create') }}"

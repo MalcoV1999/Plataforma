@@ -9,19 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
+            $table->string('username')->nullable();
+            $table->string('image')->default('uploads/1665382141_perfil.png');
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
-            $table->boolean('status');
+            $table->enum('role', ['superadmin', 'admin', 'assistant', 'buyer'])->default('buyer');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

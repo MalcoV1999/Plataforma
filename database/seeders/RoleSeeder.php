@@ -18,22 +18,22 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-     
             Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
         }
 
         
-        $superAdmin = Role::firstOrCreate(['name' => 'Super Manager']);
+        $superAdmin = Role::firstOrCreate(['name' => 'superadmin']);
         $superAdmin->syncPermissions(Permission::all());
 
-        $admin = Role::firstOrCreate(['name' => 'Manager']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
         $admin->syncPermissions(['manage products', 'view reports']);
 
-        $assistant = Role::firstOrCreate(['name' => 'Asistent']);
+        $assistant = Role::firstOrCreate(['name' => 'assistant']);
         $assistant->syncPermissions(['view reports']);
 
-        $buyer = Role::firstOrCreate(['name' => 'Purchaser']);
+        $buyer = Role::firstOrCreate(['name' => 'buyer']);
         $buyer->syncPermissions(['make purchases']);
     }
 }
+
 

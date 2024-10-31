@@ -8,48 +8,49 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    
     public function index()
     {
         $users = User::all();
         return view('user.index', ['users' => $users]);
     }
 
-    
-    public function create()
+    public function indexcreate()
     {
         return view('user.create');
     }
 
-   
     public function show($id)
     {
         $user = User::findOrFail($id);
         return view('user.show', ['user' => $user]);
     }
 
-    
-    public function edit($id)
+    public function indexupdate($id)
     {
         $user = User::findOrFail($id);
         return view('user.edit', ['user' => $user]);
     }
 
-  
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'username' => 'nullable|string|max:255',
+            'image' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'status' => 'required|boolean',
+            'role' => 'required|in:superadmin,admin,assistant,buyer',
+            'status' => 'required|in:active,inactive',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
+            'name' => $request->input('name'),
+            'username' => $request->input('username'),
+            'image' => $request->input('image') ?: 'uploads/1665382141_perfil.png',
+            'phone' => $request->input('phone'),
             'email' => $request->input('email'),
+            'role' => $request->input('role'),
             'status' => $request->input('status'),
             'password' => Hash::make($request->input('password')),
         ]);
@@ -57,23 +58,28 @@ class UserController extends Controller
         return redirect()->route('user.show', $user->id);
     }
 
-   
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'username' => 'nullable|string|max:255',
+            'image' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'status' => 'required|boolean',
+            'role' => 'required|in:superadmin,admin,assistant,buyer',
+            'status' => 'required|in:active,inactive',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         $user->update([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
+            'name' => $request->input('name'),
+            'username' => $request->input('username'),
+            'image' => $request->input('image') ?: $user->image,
+            'phone' => $request->input('phone'),
             'email' => $request->input('email'),
+            'role' => $request->input('role'),
             'status' => $request->input('status'),
             'password' => $request->filled('password') ? Hash::make($request->input('password')) : $user->password,
         ]);
@@ -81,7 +87,6 @@ class UserController extends Controller
         return redirect()->route('user.show', $user->id);
     }
 
-    
     public function delete($id)
     {
         $user = User::findOrFail($id);

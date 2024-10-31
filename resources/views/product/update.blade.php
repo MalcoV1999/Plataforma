@@ -1,5 +1,6 @@
-<!-- resources/views/product/edit.blade.php -->
 @extends('layouts.app')
+
+@section('title', 'Actualizar Producto')
 
 @section('content')
 <div class="container mx-auto p-4">

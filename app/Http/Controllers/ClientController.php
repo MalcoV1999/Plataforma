@@ -18,7 +18,6 @@ class ClientController extends Controller
         return view('client.create');
     }
 
-   
     public function show($id)
     {
         $client = Client::findOrFail($id);
@@ -36,15 +35,16 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required|string',
             'last_name' => 'required|string',
+            'dni' => 'required|string',
             'email' => 'required|email|unique:clients,email',
             'phone' => 'required|string',
             'address' => 'required|string',
             'region' => 'required|string',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         $client = Client::create($request->all());
 
-     
         return redirect()->route('client.show', $client->id);
     }
 
@@ -53,6 +53,7 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required|string',
             'last_name' => 'required|string',
+            'dni' => 'required|string',
             'email' => 'required|email|unique:clients,email,' . $id,
             'phone' => 'required|string',
             'address' => 'required|string',

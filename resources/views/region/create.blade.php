@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Crear Region')
+@section('title', 'Crear Región')
 
 @section('content')
     <div class="container mx-auto p-6">
-        <h1 class="text-2xl font-bold mb-4">{{ __('Crear Region') }}</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ __('Crear Región') }}</h1>
 
         <form action="{{ route('region.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
@@ -24,7 +24,7 @@
             <div class="flex items-center justify-between">
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    {{ __('Crear Region') }}
+                    {{ __('Crear Región') }}
                 </button>
                 <a href="{{ route('region.index') }}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                     {{ __('Regresar') }}
