@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
 {
     Schema::create('points', function (Blueprint $table) {
-        $table->increments('id');
+        $table->id();
         $table->integer('amount');
         $table->date('load_date');
         $table->foreignId('user_id')->constrained('points', 'id')->onDelete('cascade');
