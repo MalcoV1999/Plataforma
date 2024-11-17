@@ -1,5 +1,4 @@
-<nav>
-    <!-- Sidebar -->
+<!-- <nav>
     <div class="flex h-screen">
         <aside id="sidebar" class="fixed top-0 left-0 w-64 bg-gray-800 text-white h-full z-40">
             <div class="p-4 pt-20 space-y-2">
@@ -21,21 +20,17 @@
             </button>
         </aside>
 
-        <!-- Main content area -->
         <div class="ml-64 flex-grow p-4">
-            <!-- Additional Menu -->
             <ul class="wsus__menu_item wsus__menu_item_right flex space-x-4 p-2 bg-gray-100 rounded">
                 <li><a href="contact.html" class="text-gray-700 hover:text-gray-900">Contacto</a></li>
                 <li><a href="dashboard.html" class="text-gray-700 hover:text-gray-900">Mi</a></li>
                 <li><a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900">Iniciar sesión</a></li>
             </ul>
 
-            
+
         </div>
     </div>
-    <!--============================
-        MOBILE MENU END
-    ==============================-->
+
 </nav>
 
 <script>
@@ -43,4 +38,4 @@
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('hidden');
     }
-</script>
+</script> -->

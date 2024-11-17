@@ -44,6 +44,7 @@
                         <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
                         <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span>04</span></a></li>
                     </ul>
+                        <div>Log In</div>
                 </div>
             </div>
         </div>
@@ -70,5 +71,6 @@
             <a class="common_btn" href="cart_view.html">View Cart</a>
             <a class="common_btn" href="check_out.html">Checkout</a>
         </div>
+
     </div>
 </header>
