@@ -17,44 +17,42 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view("auth.login");
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function store(LoginRequest $request): RedirectResponse
-{
-    $request->authenticate();
-    $request->session()->regenerate();
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
 
-    $userRole = $request->user()->role;
+        $user = Auth::user();
 
-    switch ($userRole) {
-        case 'superadmin':
-            return redirect()->intended('/superadmin/dashboard');
-        case 'admin':
-            return redirect()->intended('/admin/dashboard');
-        case 'assistant':
-            return redirect()->intended('/assistant/dashboard');
-        case 'buyer':
-            return redirect()->intended('/buyer/dashboard');
-        default:
-            return redirect()->intended(RouteServiceProvider::HOME);
+        // Redirección según el rol
+        if ($user->hasRole("superadmin")) {
+            return redirect("/superadmin/dashboard");
+        } elseif ($user->hasRole("admin")) {
+            return redirect("/admin/dashboard");
+        } elseif ($user->hasRole("assistant")) {
+            return redirect("/assistant/dashboard");
+        } elseif ($user->hasRole("buyer")) {
+            return redirect("/buyer");
+        }
+
+        // Redirección predeterminada
+        return redirect(RouteServiceProvider::HOME);
     }
-}
 
     /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard("web")->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect("/");
     }
 }

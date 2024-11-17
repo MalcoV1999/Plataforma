@@ -20,50 +20,35 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
-Route::resource("user", UserController::class);
-Route::get("/user/create", [UserController::class, "create"])->name(
-    "user.create"
-);
 
-Route::post("/user/{id}/assign-role", [
-    UserController::class,
-    "assignRole",
-])->name("user.assignRole");
-
-// Ruta de inicio
+// Página de inicio
 Route::get("/", [HomeController::class, "index"])->name("home");
 
-// Test de roles
-Route::get("/test-role", [AdminController::class, "testRole"])
-    ->middleware(["auth", "role:superadmin"])
-    ->name("test-role");
-
-// Asignación de roles
+// Asignación de roles a usuarios
 Route::post("/assign-role", [RoleController::class, "assignRole"])
     ->middleware("auth")
     ->name("assign-role");
 
-// Dashboard General
+// Usuarios
+Route::middleware("auth")->group(function () {
+    Route::resource("user", UserController::class);
+    Route::get("/user/create", [UserController::class, "create"])->name(
+        "user.create"
+    );
+    Route::post("/user/{id}/assign-role", [
+        UserController::class,
+        "assignRole",
+    ])->name("user.assignRole");
+});
+
+// Dashboard General basado en roles
 Route::get("/dashboard", function () {
     return view("dashboard");
 })
-    ->middleware(["auth", "verified", "role:superadmin,admin,assistant"])
+    ->middleware(["auth", "verified"])
     ->name("dashboard");
 
-// Perfil general
-Route::middleware("auth")->group(function () {
-    Route::get("/profile", [ProfileController::class, "edit"])->name(
-        "profile.edit"
-    );
-    Route::patch("/profile", [ProfileController::class, "update"])->name(
-        "profile.update"
-    );
-    Route::delete("/profile", [ProfileController::class, "destroy"])->name(
-        "profile.destroy"
-    );
-});
-
-// Rutas dinámicas para roles
+// Rutas dinámicas por roles
 Route::middleware(["auth", "role:superadmin"])
     ->prefix("superadmin")
     ->group(function () {
@@ -124,10 +109,13 @@ Route::middleware(["auth", "role:assistant"])
             "updatePassword",
         ])->name("assistant.password.update");
     });
+
 Route::middleware(["auth", "role:buyer"])
     ->prefix("buyer")
     ->group(function () {
-        Route::get("/", [BuyerController::class, "home"])->name("buyer.home");
+        Route::get("/dashboard", [BuyerController::class, "dashboard"])->name(
+            "buyer.dashboard"
+        );
         Route::get("/profile", [BuyerProfileController::class, "index"])->name(
             "buyer.profile"
         );
@@ -141,7 +129,7 @@ Route::middleware(["auth", "role:buyer"])
         ])->name("buyer.password.update");
     });
 
-// Login público agrupado
+// Login público
 Route::prefix("login")->group(function () {
     Route::get("admin", [AdminController::class, "login"])->name("admin.login");
     Route::get("superadmin", [SuperadminController::class, "login"])->name(
@@ -155,7 +143,6 @@ Route::prefix("login")->group(function () {
 
 // CRUD agrupado
 Route::middleware("auth")->group(function () {
-    Route::resource("user", UserController::class);
     Route::resource("client", ClientController::class);
     Route::resource("purchase", PurchaseController::class);
     Route::resource("point", PointController::class);
@@ -165,5 +152,5 @@ Route::middleware("auth")->group(function () {
     Route::resource("company", CompanyController::class);
 });
 
-// Autenticación de Laravel Breeze/Jetstream
+// Laravel Breeze/Jetstream Auth
 require __DIR__ . "/auth.php";
