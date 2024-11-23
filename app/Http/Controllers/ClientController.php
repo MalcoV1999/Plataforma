@@ -41,7 +41,6 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
         return view('client.update', ['client' => $client]);
     }
-
     public function store(Request $request)
     {
         $request->validate([
