@@ -55,7 +55,6 @@ class ClientController extends Controller
         ]);
 
         $client = Client::create($request->all());
-
         return redirect()->route('client.show', $client->id);
     }
 
