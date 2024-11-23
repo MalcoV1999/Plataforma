@@ -36,7 +36,6 @@ class ClientController extends Controller
 
     return redirect()->route('client.index')->with('success', 'Cliente eliminado exitosamente');
     }
-
     public function indexupdate($id)
     {
         $client = Client::findOrFail($id);
