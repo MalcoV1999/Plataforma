@@ -12,8 +12,13 @@ class ClientController extends Controller
         $clients = Client::all();
         return view('client.index', ['clients' => $clients]);
     }
+    public function edit($id)
+{
+    $client = Client::findOrFail($id);
+    return view('client.edit', compact('client'));
+}
 
-    public function indexcreate()
+    public function create()
     {
         return view('client.create');
     }
@@ -22,6 +27,14 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail($id);
         return view('client.show', ['client' => $client]);
+    }
+
+    public function destroy($id)
+    {
+    $client = Client::findOrFail($id);
+    $client->delete();
+
+    return redirect()->route('client.index')->with('success', 'Cliente eliminado exitosamente');
     }
 
     public function indexupdate($id)

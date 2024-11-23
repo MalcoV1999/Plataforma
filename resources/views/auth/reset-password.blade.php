@@ -17,8 +17,8 @@
                             <div class="wsus__single_pass">
                                 <label>Correo Electrónico</label>
                                 <input id="email" type="email" name="email"
-                                value="{{old('email'),$request->email}}" placeholder="Correo Electrónico">
-                            </div>
+                                value="{{ old('email') ?? $request->email }}" placeholder="Correo Electrónico">
+                                </div>
                             <div class="wsus__single_pass">
                                 <label>Nueva Contraseña</label>
                                 <input id="password" type="password" name="password"

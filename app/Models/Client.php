@@ -9,6 +9,9 @@ class Client extends Model
 {
     use HasFactory;
 
+    /**
+     * Las columnas que se pueden llenar masivamente.
+     */
     protected $fillable = [
         'name',
         'last_name',
@@ -20,7 +23,9 @@ class Client extends Model
         'user_id',
     ];
 
-    
+    /**
+     * Relación: Un cliente pertenece a un usuario.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

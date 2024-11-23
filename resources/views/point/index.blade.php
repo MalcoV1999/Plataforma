@@ -32,11 +32,15 @@
                         <td class="px-4 py-2">{{ \Carbon\Carbon::parse($point->load_date)->format('Y-m-d') }}</td>
                         <td class="px-4 py-2 flex space-x-2">
                             <a href="{{ route('point.show', $point->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
-                            <a href="{{ route('point.indexupdate', $point->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
-                            <form action="{{ route('point.delete', $point->id) }}" method="POST" class="inline">
+                            <a href="{{ route('point.update', $point->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
+                            <form action="{{ route('point.destroy', $point->id) }}" method="POST" class="inline">
                                 @csrf
-                                <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">{{ __('Eliminar') }}</button>
+                                @method('DELETE')
+                                <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">
+                                {{ __('Eliminar') }}
+                                </button>
                             </form>
+
                         </td>
                     </tr>
                 @endforeach

@@ -13,7 +13,7 @@ class PurchaseController extends Controller
         return view('purchase.index', ['purchases' => $purchases]);
     }
 
-    public function indexcreate()
+    public function create()
     {
         return view('purchase.create');
     }

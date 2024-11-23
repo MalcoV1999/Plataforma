@@ -35,7 +35,7 @@
                         <td class="px-4 py-2">{{ $purchase->points_used }}</td>
                         <td class="px-4 py-2">{{ $purchase->date->format('d-m-Y') }}</td>
                         <td class="px-4 py-2 flex space-x-2">
-                            <a href="{{ route('purchase.show', $purchase->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
+                            <a href="{{ route('purchase.show', parameters: $purchase->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
                             <a href="{{ route('purchase.indexupdate', $purchase->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
                             <form action="{{ route('purchase.delete', $purchase->id) }}" method="POST" class="inline">
                                 @csrf

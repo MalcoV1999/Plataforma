@@ -13,10 +13,12 @@ class PointController extends Controller
         return view('point.index', ['points' => $points]);
     }
 
-    public function indexcreate()
+    public function create()
     {
         return view('point.create');
     }
+
+
 
     public function show($id)
     {
@@ -56,12 +58,12 @@ class PointController extends Controller
 
         return redirect()->route('point.show', $id);
     }
-
-    public function delete($id)
+    public function destroy($id)
     {
-        $point = Point::findOrFail($id);
-        $point->delete();
+    $point = Point::findOrFail($id);
+    $point->delete();
 
-        return redirect()->route('point.index');
+    return redirect()->route('point.index')->with('success', 'Punto eliminado exitosamente');
     }
+    
 }
