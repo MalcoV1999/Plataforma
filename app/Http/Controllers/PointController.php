@@ -62,7 +62,6 @@ class PointController extends Controller
     {
     $point = Point::findOrFail($id);
     $point->delete();
-
     return redirect()->route('point.index')->with('success', 'Punto eliminado exitosamente');
     }
     
