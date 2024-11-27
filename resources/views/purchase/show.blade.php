@@ -15,7 +15,7 @@
                 <a href="{{ route('purchase.index') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none">
                     {{ __('Regresar') }}
                 </a>
-                <a href="{{ route('purchase.indexupdate', $purchase->id) }}" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
+                <a href="{{ route('purchase.update', $purchase->id) }}" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
                     {{ __('Editar') }}
                 </a>
             </div>

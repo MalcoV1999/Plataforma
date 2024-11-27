@@ -34,10 +34,13 @@
                         </td>
                         <td class="px-4 py-2 flex space-x-2">
                             <a href="{{ route('category.show', $category->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
-                            <a href="{{ route('category.indexupdate', $category->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
-                            <form action="{{ route('category.delete', $category->id) }}" method="POST" class="inline">
+                            <a href="{{ route('category.edit', $category->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
+                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="inline">
                                 @csrf
-                                <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">{{ __('Eliminar') }}</button>
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600">
+                                {{ __('Eliminar') }}
+                                </button>
                             </form>
                         </td>
                     </tr>

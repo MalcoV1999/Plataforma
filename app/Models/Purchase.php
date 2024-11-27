@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
         'product_id',
         'quantity',
         'points_used',
         'date',
+    ];
+
+    protected $casts = [
+        'date' => 'datetime', 
     ];
 
     public function user()

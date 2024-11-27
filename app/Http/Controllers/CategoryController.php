@@ -13,12 +13,11 @@ class CategoryController extends Controller
         return view('category.index', ['categories' => $categories]);
     }
 
-    public function indexcreate()
+    public function create()
     {
         return view('category.create');
     }
 
-    
     public function show($id)
     {
         $category = Category::findOrFail($id);
@@ -35,28 +34,55 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'boolean',
+            'status' => 'nullable|boolean',
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $category = Category::create($request->all());
+        $data = $request->all();
+        $data['status'] = $request->has('status') ? true : false; // Manejo del checkbox
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
 
-        return redirect()->route('category.show', $category->id);
+        $category = Category::create($data);
+
+        return redirect()->route('category.show', $category->id)->with('success', 'Categoría creada exitosamente');
+    }
+
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return redirect()->route('category.index')->with('success', 'Categoría eliminada exitosamente');
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'boolean',
+            'status' => 'nullable|boolean',
             'image' => 'nullable|image|max:2048',
         ]);
 
         $category = Category::findOrFail($id);
-        $category->update($request->all());
+        $data = $request->all();
+        $data['status'] = $request->has('status') ? true : false; // Manejo del checkbox
 
-        return redirect()->route('category.show', $id);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $category->update($data);
+
+        return redirect()->route('category.show', $id)->with('success', 'Categoría actualizada exitosamente');
+    }
+
+    public function edit($id)
+    {
+        $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
     }
 
     public function delete($id)
@@ -64,7 +90,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success', 'Categoría eliminada exitosamente');
     }
 }

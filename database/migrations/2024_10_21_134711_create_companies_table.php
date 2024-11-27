@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->string('logo')->nullable();
             $table->string('ruc');
-            $table->foreignId('user_id')->constrained('companies', 'id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

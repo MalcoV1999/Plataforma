@@ -13,12 +13,19 @@ class RegionController extends Controller
         return view('region.index', ['regions' => $regions]);
     }
 
-    public function indexcreate()
+    public function create()
     {
         return view('region.create');
     }
 
-   
+    public function destroy($id)
+    {
+        $region = Region::findOrFail($id);
+        $region->delete();
+
+        return redirect()->route('region.index')->with('success', 'Región eliminada exitosamente');
+    }
+
     public function show($id)
     {
         $region = Region::findOrFail($id);
@@ -38,9 +45,18 @@ class RegionController extends Controller
             'status' => 'nullable|boolean',
         ]);
 
-        Region::create($request->all());
+        $data = $request->all();
+        $data['status'] = $request->has('status') ? true : false; // Manejo del checkbox
 
-        return redirect()->route('region.index');
+        Region::create($data);
+
+        return redirect()->route('region.index')->with('success', 'Región creada exitosamente');
+    }
+
+    public function edit($id)
+    {
+        $region = Region::findOrFail($id);
+        return view('region.edit', compact('region'));
     }
 
     public function update(Request $request, $id)
@@ -51,10 +67,12 @@ class RegionController extends Controller
         ]);
 
         $region = Region::findOrFail($id);
-        $region->update($request->all());
+        $data = $request->all();
+        $data['status'] = $request->has('status') ? true : false; // Manejo del checkbox
 
-        
-        return redirect()->route('region.show', $id);
+        $region->update($data);
+
+        return redirect()->route('region.show', $id)->with('success', 'Región actualizada exitosamente');
     }
 
     public function delete($id)
@@ -62,7 +80,6 @@ class RegionController extends Controller
         $region = Region::findOrFail($id);
         $region->delete();
 
-      
-        return redirect()->route('region.index');
+        return redirect()->route('region.index')->with('success', 'Región eliminada exitosamente');
     }
 }

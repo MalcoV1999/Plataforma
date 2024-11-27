@@ -39,8 +39,8 @@
                     </td>
                     <td class="px-4 py-2 flex space-x-2">
                         <a href="{{ route('company.show', $company->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
-                        <a href="{{ route('company.indexupdate', $company->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
-                        <form action="{{ route('company.delete', $company->id) }}" method="POST" class="inline">
+                        <a href="{{ route('company.edit', $company->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
+                        <form action="{{ route('company.destroy', $company->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">{{ __('Eliminar') }}</button>

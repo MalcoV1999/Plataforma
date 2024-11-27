@@ -38,11 +38,13 @@
                         <td class="px-4 py-2">{{ $product->points_price }}</td>
                         <td class="px-4 py-2 flex space-x-2">
                             <a href="{{ route('product.show', $product->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">{{ __('Mostrar') }}</a>
-                            <a href="{{ route('product.indexupdate', $product->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
-                            <form action="{{ route('product.delete', $product->id) }}" method="POST" class="inline">
-                                @csrf
+                            <a href="{{ route('product.edit', $product->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">{{ __('Editar') }}</a>
+                            <form action="{{ route('product.destroy', $product->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE') <!-- Esto asegura que Laravel interprete el método como DELETE -->
                                 <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600">{{ __('Eliminar') }}</button>
                             </form>
+
                         </td>
                     </tr>
                 @endforeach

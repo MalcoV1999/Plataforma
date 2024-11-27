@@ -44,7 +44,11 @@ class PointController extends Controller
 
         return redirect()->route('point.show', $point->id);
     }
-
+    public function edit($id)
+    {
+        $point = Point::findOrFail($id);
+        return view('point.edit', compact('point'));
+    }
     public function update(Request $request, $id)
     {
         $request->validate([

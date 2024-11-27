@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all(); // Pasa los roles a la vista
+        $roles = Role::all(); // Obtiene todos los roles disponibles
         return view("user.create", compact("roles"));
     }
 
@@ -41,8 +41,7 @@ class UserController extends Controller
             "name" => $request->input("name"),
             "username" => $request->input("username") ?: null, // Si no se proporciona, será nulo
             "phone" => $request->input("phone") ?: null, // Igual para el teléfono
-            "image" =>
-                $request->input("image") ?: "uploads/default_profile.png", // Imagen por defecto
+            "image" => $request->input("image") ?: "uploads/default_profile.png", // Imagen por defecto
             "email" => $request->input("email"),
             "status" => $request->input("status"),
             "password" => Hash::make($request->input("password")), // Encripta la contraseña
@@ -78,8 +77,7 @@ class UserController extends Controller
             "username" => "nullable|string|max:255",
             "image" => "nullable|string|max:255",
             "phone" => "nullable|string|max:255",
-            "email" =>
-                "required|string|email|max:255|unique:users,email," . $id,
+            "email" => "required|string|email|max:255|unique:users,email," . $id,
             "role" => "required|exists:roles,name", // Verifica que el rol existe
             "status" => "required|in:active,inactive",
             "password" => "nullable|string|min:8|confirmed",
@@ -129,9 +127,6 @@ class UserController extends Controller
 
         return redirect()
             ->route("user.index")
-            ->with(
-                "success",
-                "Rol '{$role}' asignado al usuario '{$user->name}'."
-            );
+            ->with("success", "Rol '{$role}' asignado al usuario '{$user->name}'.");
     }
 }

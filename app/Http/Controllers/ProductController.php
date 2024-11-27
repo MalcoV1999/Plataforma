@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use App\Models\Category; 
+use App\Models\Region;  
+use App\Models\Point;    
 class ProductController extends Controller
 {
     public function index()
@@ -13,10 +15,15 @@ class ProductController extends Controller
         return view('product.index', ['products' => $products]);
     }
 
-    public function indexcreate()
-    {
-        return view('product.create');
-    }
+    public function create()
+{
+    $categories = Category::all(); // Obtén todas las categorías
+    $regions = Region::all();     // Obtén todas las regiones
+    $points = Point::all();       // Obtén todos los puntos
+
+    return view('product.create', compact('categories', 'regions', 'points'));
+}
+
 
     public function show($id)
     {
@@ -89,4 +96,20 @@ class ProductController extends Controller
         return redirect()->route('product.index')
             ->with('success', 'Product deleted successfully.');
     }
+    public function destroy($id)
+    {
+    $product = Product::findOrFail($id);
+    $product->delete();
+    return redirect()->route('product.index')->with('success', 'Producto eliminado exitosamente');
+    }
+    public function edit($id)
+{
+    $product = Product::findOrFail($id);
+    $categories = Category::all();
+    $regions = Region::all();
+    $points = Point::all();
+
+    return view('product.edit', compact('product', 'categories', 'regions', 'points'));
+}
+
 }

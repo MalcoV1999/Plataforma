@@ -71,4 +71,16 @@ class PurchaseController extends Controller
 
         return redirect()->route('purchase.index');
     }
+    public function edit($id)
+{
+    $purchase = Purchase::findOrFail($id);
+    return view('purchase.edit', compact('purchase'));
+}
+
+    public function destroy($id)
+    {
+    $purchase = Purchase::findOrFail($id);
+    $purchase->delete();
+    return redirect()->route('purchase.index')->with('success', 'La Compra ha sido eliminada exitosamente');
+    }
 }
